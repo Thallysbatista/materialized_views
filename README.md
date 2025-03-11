@@ -17,6 +17,9 @@ This repository is a collection of BI code samples that showcase my skills in SQ
 
 - `mvw_user_funnel_daily_metrics.sql`: Consolidates daily metrics of the user registration and conversion funnel. Tracks valid leads, blocked users, proposal opportunities, and follow-ups created or finalized within 30 days after registration.
 
+- `mvw_user_events_behavior_sankey`: analyzes user flows across the app to support building Sankey diagrams of navigation and conversion paths.
+
+
 
 - **Documentation:**  
   In the Docs folder, you will find detailed case studies and documentation that explain the business context, data challenges, and the analytical approaches used to derive insights.

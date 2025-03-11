@@ -92,3 +92,22 @@ This view connects user creation, lead validation, follow-up activity, and propo
 **Impact:**  
 Used to measure user engagement and conversion rate across acquisition channels and platforms. Key in optimizing user activation and identifying daily drop-offs.
 
+
+### User Behavior Sankey Flow (`mvw_user_events_behavior_sankey`)
+
+**Goal:**  
+This view analyzes user behavior within the application by tracking screen navigation events and interactions. It allows the identification of drop-off points and user journey flows across various app states, ultimately enabling the construction of a Sankey chart.
+
+**Input Tables:**
+- `dbdelivery.tb_konsidb_events`
+- `dbdelivery.tb_mongo_users`
+
+**Output Fields:**
+- `ordem`: Flow order
+- `source`: Source screen or state
+- `target`: Target screen or state
+- `usuarios`: Number of users who transitioned from source to target
+
+**Use Case:**  
+This view can be used to build user behavior funnels and Sankey diagrams, helping identify where users are dropping off or succeeding in the journey, such as generating leads, encountering errors, or using support features.
+
