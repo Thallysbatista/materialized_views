@@ -322,52 +322,6 @@ clicked_reset_password_on_credentials_screen AS (
   QUALIFY ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY event_timestamp ASC) = 1
 ),
 
--- This script analyzes user behavior by tracking their interaction with app screens and events,
--- ultimately producing a Sankey diagram to visualize their flow.
-
-WITH events_data AS (
-  SELECT
-    ke.user_id,
-    ke.data_criacao AS event_timestamp,
-    mu.data_criacao AS user_creation_date,
-    evento_id,
-    plataforma_fonte AS user_origin,
-    plataforma,
-    mu.convenio AS covenant
-  FROM dbdelivery.tb_konsidb_events ke
-  JOIN dbdelivery.tb_mongo_users mu
-    ON ke.user_id = mu.user_id
-  WHERE mu.convenio IN ('PREFEITURA DE GOIÂNIA', 'GOVERNO DO RIO DE JANEIRO', 'GOVERNO DE AMAZONAS', 'GOVERNO DO PARANÁ')
-    AND evento_id IN (
-      'registration_completed', 'registration_completed_sms', 'registration_completed_email',
-      'opened_easy_consig_registries_screen', 'opened_registries_screen', 'opened_govpe_registries_screen',
-      'clicked_more_registry_easy_consig_screen', 'clicked_easy_consig_registries_support',
-      'clicked_registries_screen_support_button', 'clicked_del_registry_easy_consig_screen',
-      'clicked_finish_btn_easy_consig_screen', 'gave_registry',
-      'view_lead_async_load_without_password', 'view_bank_wheel_screen_without_password',
-      'clicked_load_async_support_without_psw', 'lead_generation_success', 'lead_generation_success_api',
-      'lead_generation_failed', 'clicked_blocked_portability_button', 'clicked_blocked_max_change_button',
-      'clicked_blocked_fit_change_button', 'clicked_blocked_instlment_red_btn', 'clicked_new_credit',
-      'opened_new_credit_oportunities_view', 'clicked_open_password_recovery', 'gave_password',
-      'gave_password_on_dashboard', 'clicked_dont_know_consigfacil_section', 'clicked_dont_know_app_section',
-      'credentials_screen_opened', 'opened_dashboard_psw_screen', 'clicked_credentials_support_with_psw',
-      'view_lead_async_load_with_password', 'view_bank_wheel_screen_with_password',
-      'clicked_load_async_support_with_psw', 'lead_gen_with_psw_success', 'lead_gen_with_psw_failed',
-      'clicked_credentials_error_screen_support', 'opened_wrong_psw_screen', 'open_credentials_error_screen',
-      'clicked_back_to_opportunities', 'clicked_try_password_again', 'clicked_recovery_password_with_psw',
-      'clicked_try_again_blocked_screen', 'open_blocked_access_screen', 'clicked_blocked_access_screen_support',
-      'clicked_back_to_opportunities', 'entered_new_credit_no_opportunity', 'gave_psw_during_contracting',
-      'opened_contracting_psw_screen', 'clicked_operation_done_continue_button', 'opened_operation_done_screen',
-      'clicked_operation_done_support_button', 'no_lead_user_is_unlinked',
-      'clicked_instabillity_error_screen_try_again_button', 'open_instability_error_screen',
-      'clicked_instabillity_error_screen_support_button', 'no_lead_user_incorrect_covenant',
-      'no_lead_covenant_confirmation_screen', 'no_lead_user_correct_covenant', 'wrong_registry_error_screen_opened',
-      'clicked_wrong_registry_screen_retry_btn', 'clicked_wrong_registry_support_btn',
-      'clicked_easy_consig_registries_support', 'clicked_blocked_benefit_card', 'splash_screen_view',
-      'opened_unavailable_access_screen', 'clicked_support_unavailable_access'
-    )
-),
-
 clicked_support_on_credentials_screen AS (
   SELECT 
     user_id,
